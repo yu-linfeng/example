@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--自动注入包扫描配置-->
+    <context:component-scan base-package="com.coderbuff.bean" />
+
+    <!-- bean创建配置 -->
+
+    <!-- scope="prototype" prototype：多实例，默认singleton单实例-->
+    <bean id="demo" class="com.coderbuff.bean.Demo" init-method="init" destroy-method="destory"/>
+
+    <!-- 循环依赖示例 -->
+    <bean id="instanceA" class="com.coderbuff.bean.InstanceA">
+        <property name="instanceB" ref="instanceB"/>
+    </bean>
+    <bean id="instanceB" class="com.coderbuff.bean.InstanceB">
+        <property name="instanceA" ref="instanceA"/>
+    </bean>
+</beans>
