@@ -1,7 +1,4 @@
-import com.coderbuff.bean.AutoInjectionBean;
-import com.coderbuff.bean.Demo;
-import com.coderbuff.bean.InstanceA;
-import com.coderbuff.bean.InstanceB;
+import com.coderbuff.bean.*;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -53,6 +50,14 @@ public class SpringTest {
         InstanceB instanceB = ctx.getBean(InstanceB.class);
         Assert.assertNotNull(instanceA);
         Assert.assertNotNull(instanceB);
+    }
+
+    @Test
+    public void propertyValueTest() {
+        Client client = ctx.getBean(Client.class);
+        Assert.assertEquals(client.getUrl(), "localhost");
+        Assert.assertEquals(client.getUser(), "okevin");
+        Assert.assertEquals(client.getPassword(), "0000");
     }
 
     /**
