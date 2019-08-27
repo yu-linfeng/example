@@ -1,7 +1,4 @@
-import com.coderbuff.bean.AutoInjectionBean;
-import com.coderbuff.bean.Demo;
-import com.coderbuff.bean.InstanceA;
-import com.coderbuff.bean.InstanceB;
+import com.coderbuff.bean.*;
 import com.coderbuff.config.Config;
 import org.junit.After;
 import org.junit.Assert;
@@ -50,6 +47,17 @@ public class SpringAnnotationTest {
         InstanceB instanceB = ctx.getBean(InstanceB.class);
         Assert.assertNotNull(instanceA);
         Assert.assertNotNull(instanceB);
+    }
+
+    /**
+     * bean通过配置文件属性赋值测试
+     */
+    @Test
+    public void propertyValueTest() {
+        Client client = ctx.getBean(Client.class);
+        Assert.assertEquals(client.getUrl(), "localhost");
+        Assert.assertEquals(client.getUser(), "okevin");
+        Assert.assertEquals(client.getPassword(), "0000");
     }
 
     /**
