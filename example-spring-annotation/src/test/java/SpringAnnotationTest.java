@@ -61,6 +61,24 @@ public class SpringAnnotationTest {
     }
 
     /**
+     * profile测试环境切换测试
+     * Run Config: -Dspring.profiles.active=test
+     * 常结合maven使用
+     */
+    @Test
+    public void testEnvirProfileTest() {
+    }
+
+    /**
+     * profile生产切换测试
+     * Run Config: -Dspring.profiles.active=prod
+     * 常结合maven使用
+     */
+    @Test
+    public void prodEnvirProfileTest() {
+    }
+
+    /**
      * 关闭IoC容器
      * 测试bean的销毁方法
      */
