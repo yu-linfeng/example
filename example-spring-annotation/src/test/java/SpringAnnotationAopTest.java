@@ -1,6 +1,5 @@
-import com.coderbuff.aop.LogAspect;
 import com.coderbuff.bean.Calc;
-import com.coderbuff.config.AopConfig;
+import com.coderbuff.config.Config;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -16,15 +15,13 @@ public class SpringAnnotationAopTest {
 
     @Before
     public void init() {
-        ctx = new AnnotationConfigApplicationContext(AopConfig.class);
+        ctx = new AnnotationConfigApplicationContext(Config.class);
     }
 
 
     @Test
     public void aopTest() {
         Calc calc = ctx.getBean(Calc.class);
-        LogAspect a = ctx.getBean(LogAspect.class);
-        System.out.println(a == null);
-        calc.div(1, 2);
+        System.out.println(calc.div(1, 1));
     }
 }
