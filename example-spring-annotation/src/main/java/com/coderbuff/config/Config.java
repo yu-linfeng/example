@@ -6,7 +6,6 @@ import com.coderbuff.bean.InstanceB;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 
-import javax.security.auth.login.CredentialNotFoundException;
 import javax.sql.DataSource;
 
 /**
@@ -15,6 +14,7 @@ import javax.sql.DataSource;
 @PropertySource(value = {"classpath:/app.properties"})
 @Configuration
 @ComponentScan(value = "com.coderbuff")
+@EnableAspectJAutoProxy
 public class Config {
 
     @Bean(initMethod = "init", destroyMethod = "destory")
