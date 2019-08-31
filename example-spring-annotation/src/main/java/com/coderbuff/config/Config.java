@@ -3,10 +3,16 @@ package com.coderbuff.config;
 import com.coderbuff.bean.Demo;
 import com.coderbuff.bean.InstanceA;
 import com.coderbuff.bean.InstanceB;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.beans.PropertyVetoException;
 
 /**
  * Created by OKevin On 2019/8/27
@@ -15,6 +21,7 @@ import javax.sql.DataSource;
 @Configuration
 @ComponentScan(value = "com.coderbuff")
 @EnableAspectJAutoProxy
+@EnableTransactionManagement
 public class Config {
 
     @Bean(initMethod = "init", destroyMethod = "destory")
@@ -49,8 +56,31 @@ public class Config {
      */
     @Profile("prod")
     @Bean("prodDataSource")
-    DataSource dataSourceProd(@Value("${db.url}") String url, @Value("${db.user}") String user, @Value("${db.password}") String password, @Value("${db.driverClass}") String driverClass) {
+    public DataSource dataSourceProd(@Value("${db.url}") String url, @Value("${db.user}") String user, @Value("${db.password}") String password, @Value("${db.driverClass}") String driverClass) {
         System.out.println(String.format("数据源生产环境，url=%s, user=%s, password=%s, driverClass=%s", url, user, password, driverClass));
         return null;
+    }
+
+    /**
+     * 用于事务测试
+     * @return 数据源
+     */
+    @Bean
+    public DataSource dataSource() throws PropertyVetoException {
+        ComboPooledDataSource dataSource = new ComboPooledDataSource();
+        dataSource.setUser("root");
+        dataSource.setPassword("0000");
+        dataSource.setDriverClass("com.mysql.jdbc.Driver");
+        dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/test");
+        return dataSource;
+    }
+
+    @Bean
+    public JdbcTemplate jdbcTemplate() throws PropertyVetoException {
+        return new JdbcTemplate(dataSource());
+    }
+    @Bean
+    public PlatformTransactionManager transactionManager() throws PropertyVetoException {
+        return new DataSourceTransactionManager(dataSource());
     }
 }
